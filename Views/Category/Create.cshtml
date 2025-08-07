@@ -1,0 +1,20 @@
+﻿@model LTUD.Controllers.CategoryViewModel
+<h1>Thêm mới danh mục sản phẩm</h1>
+<form class="row g-3" asp-action="Create" method="post">
+    <div class="col-md-6">
+        <label for="nameCategory" class="form-label">Tên danh mục</label>
+        <input type="text" class="form-control" id="n
+ameCategory" asp-for="Request.Name" value="@ViewData["Name"]">
+    </div>
+    <div class="col-12">
+        <a asp-action="Index" asp-controller="Category" ><button asp-action="Index" asp-controller="Category" type="button" class="btn btn-secondary"><i class="fa-solid fa-rotate-left"></i> Quay lại</button></a>
+        <button type="submit" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Thêm</button>
+    </div>
+    @if (ViewData["message"] != null)
+    {
+        <div class="mb-3 alert-danger">
+            @ViewData["message"]
+        </div>
+    }
+   
+</form>
