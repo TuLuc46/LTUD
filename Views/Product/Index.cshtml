@@ -2,68 +2,44 @@
 @model ProductViewModel
 
 <h1>Danh Sách Sản Phẩm</h1>
-
-@* <form asp-controller="Category" asp-action="Index" class="d-flex g-3"> 
-    <div class="flex-grow-1 me-3">
-        <input type="text" class="form-control" id="keyWord" name="keyWord" value="@Model.txtKey" placeholder="Nhập từ cần tìm
-        <button type="submit" class="btn btn-info mb-3"><i class="fa-solid fa-magnifying-glass"></i> Tìm kiếm</button>
+<form asp-controller="Produ
+ct" asp-action="Index">
+    <div class="mb-3">
+        <label class="form-label">Danh mục</label>
+        <select id="category" class="form-control">
+            <option value="0">Tất cả</option>
+            @if (Model.Categories != null)
+            {
+                foreach (var cat in Model.Categories)
+                {
+                    <option value="@cat.Id">@cat.Name</option>
+                }
+            }
+        </select>
+    </div>
+    <div class="d-flex g-3">
+        <div class="flex-grow-1 me-3">
+            <input type="text" class="form-control" id="keyWord" name="keyWord" placeholder="Nhập từ cần tìm">
+        </div>
+        <div class="">
+            <button type="submit" class="btn btn-info mb-3"><i class="fa-solid fa-magnifying-glass"></i> Tìm kiếm</button>
+        </div>
     </div>
 </form>
 
-<button data-bs-toggle="modal" data-bs-target="#addModal" class="btn btn-success"><i class="fa-solid fa-plus"></i> Thêm</button> *@
-
-<div>
-    <label class="form-label" for="category">Chọn Danh Mục:</label>
-    <select class="form-control">
-        <option value="">-- Chọn Danh Mục --</option>
-        <option>Tất cả</option>
-        @if(Model.Categories != null)
-        {
-            foreach (var category in Model.Categories)
-            {
-                <option value="@category.Id">@category.Name</option>
-            }
-        }
-)
-    
-    </select>
+<div class="d-flex justify-content-end mb-3">
+    @*<a asp-action="Create" asp-controller="Category" class="btn btn-success me-1"><i class="fa-solid fa-plus"></i> Thêm</a>*@
+    <button class="btn btn-primary me-1"><i class="fa fa-file-excel" aria-hidden="true"></i> Import từ Excel</button>
+    <button data-bs-toggle="modal" data-bs-target="#addModal" class="btn btn-success"><i class="fa-solid fa-plus"></i> Thêm</button>
 </div>
-<h2>Danh sách Sản phẩm trong Danh mục:</h2>
-<table class="table table-hover table-bordered">
-    <tr class="table-success">
-        <th>TT</th>
-        <th>Mã Sản Phẩm</th>
-        <th>Tên Sản Phẩm</th>
-        <th>Số Lượng</th>
-        <th>Giá</th>
-        <th>Hình Ảnh</th>
-        <th>Danh Mục</th>
-        <th>Thao Tác</th>
-    </tr>
-    <!--Dòng hiện thông tin sản phẩm-->
-    
-    @if (Model.Products != null && Model.Products.Count > 0)
-    {
-        int index = 0;
-        foreach(var product in Model.Products)
-        {
-            <tr>
-                <td>@(++index)</td>
-                <td>@product.Id</td>
-                <td>@product.Name</td>
-                <td>@product.Quantity</td>
-                <td>@product.Price.ToString("C")</td>
-                <td><img src="@product.Image" alt="Product Image" style="width: 50px; height: 50px;" /></td>
-                <td>@product.CategoryId</td>
-                <td>
-                    @* <a asp-action="Update" asp-controller="Product" asp-route-id="@product.Id" class="btn btn-primary"><i class="fa-solid fa-pencil"></i> Sửa</a>
-                    <button data-bs-toggle="modal" data-bs-target="#)</button> *@
-                </td>
-            </tr>
-        }
-    }
-    else
-    {
-        <tr></tr>
-    }
-</table>
+
+
+<div id="product">
+    <partial name="_List" model="@Model" />
+</div>
+<!--Add Modal-->
+<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <partial name="_Create" model="@Model" />
+    </div>
+</div>

@@ -15,6 +15,6 @@ namespace LTUD.DTO
         //foreign key to Category
         [ForeignKey("CategoryId")]
         public int CategoryId { get; set; }
-
+        public IFormFile ImageFile { get; set; }
     }
 }
